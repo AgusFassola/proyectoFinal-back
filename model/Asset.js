@@ -11,8 +11,8 @@ const assetSchema = new Schema({
         required: true,
     },
     assigned_employee:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Employee',
+        type: String,
+        required:true,
     },
     assigned_date:{
         type: Date,

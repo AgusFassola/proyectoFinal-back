@@ -1,22 +1,22 @@
 const express = require('express');
 //const { check } = require('express-validator');
-//const assetController = require('../controllers/asset-controller');
+const {getAssets, getAssetById, createAasset, updateAsset, deleteAsset} = require('../controllers/assetController');
 const router = express.Router();
 
 //obtener todos los assets
-router.get('/', assetController.getassets);
+router.get('/', getAssets);
 
 //Obtener asset por ID
-router.get('/:id',assetController.getAssetById);
+router.get('/:id',getAssetById);
 
 //Crear un nuevo asset
-router.post('/create', assetController.createAsset );
+router.post('/create', createAasset );
 
 //actualizar un asset
-router.patch('/:uid', assetController.updateAsset );
+router.patch('/:id', updateAsset );
 
 //eliminar un asset
-router.delete('/:uid', assetController.deleteAsset );
+router.delete('/:id', deleteAsset );
 
 
 module.exports = router;
