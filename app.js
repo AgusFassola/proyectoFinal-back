@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const assetRoutes = require('./routes/assetRoutes');
 const HttpError = require('./model/http-error');
-
+const usersRoutes = require('./routes/users-routes');
 const cors = require('cors');
 
 app = express();
@@ -13,6 +13,7 @@ app.use(cors({ origin:'http://localhost:3000' }));
 app.use(bodyParser.json());//convierte solicitudes json a un objeto javascript accesible con req.body
 
 app.use('/api/assets', assetRoutes );
+app.use('/api/users', usersRoutes );
 
 //Error para rutas no encontradas
 app.use((req, res, next) => { //sin ruta especifica aplica a todas las rutas

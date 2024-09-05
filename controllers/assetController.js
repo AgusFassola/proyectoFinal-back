@@ -44,26 +44,24 @@ const createAsset = async(req, res, next ) => {
 //Obtener los assets
 const getAssets = async (req, res, next) => {
 
-    const { description, assigned_employee, assigned_date, page = 1, limit = 20 } = req.query;
+    const { description, assigned_employee, assigned_date,sortField='description', sortDirection = 'asc', page = 1, limit = 20 } = req.query;
     let query = {};
 
-    if (description) query.description = description
-
+    if (description) query.description = new RegExp( description, 'i');
     if( assigned_employee ) query.assigned_employee = new RegExp( assigned_employee, 'i');
     if( assigned_date ) query.assigned_date = new RegExp( assigned_date, 'i');
 
     let assets;
     try{
         assets = await Asset.find(query)
+            .sort({ [sortField]: sortDirection === 'asc' ? 1 : -1 })
             .skip((page -1) * limit)
             .limit(parseInt(limit));
 
         const total = await Asset.countDocuments(query);
 
         res.json({ 
-            assets: assets.map( asset =>
-                 asset.toObject({ getters: true })
-            ),
+            assets: assets.map( asset => asset.toObject({ getters: true })),
             totalPages: Math.ceil( total / limit ),
             currentPage: parseInt(page),
         });
